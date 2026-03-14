@@ -14,7 +14,7 @@ export default function CheckoutModal({ productId }) {
       try {
         setLoading(true);
         // Faz a busca na sua API
-        const response = await fetch(`http://localhost:3000/api/produtos/${productId}`);
+        const response = await fetch(`https://loja-tech-plum.vercel.app/api/produtos/${productId}`);
         
         if (!response.ok) {
           throw new Error('Produto não encontrado');

@@ -12,7 +12,7 @@ export default function DashboardProdutos() {
   useEffect(() => {
     const buscarDados = async () => {
       try {
-        const response = await fetch('http://localhost:3000/api/produtos');
+        const response = await fetch('https://loja-tech-plum.vercel.app/api/produtos');
         
         if (!response.ok) {
           throw new Error('Falha ao conectar com o servidor');
