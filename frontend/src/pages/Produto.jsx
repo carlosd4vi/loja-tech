@@ -17,7 +17,7 @@ const ViewProduto = () => {
                 setLoading(true);
                 
                 // 2. Faz a chamada real para a sua API usando o ID da URL
-                const response = await fetch(`https://loja-tech-plum.vercel.app/api/produtos/${id}`);
+                const response = await fetch(`https://loja-tech-2026.vercel.app/api/produtos/${id}`);
                 
                 // 3. Verifica se a API respondeu com sucesso
                 if (!response.ok) {
