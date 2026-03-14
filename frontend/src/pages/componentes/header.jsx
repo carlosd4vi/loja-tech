@@ -17,7 +17,7 @@ const Header = () => {
   useEffect(() => {
     const buscarProdutosParaPesquisa = async () => {
       try {
-        const response = await fetch('https://loja-tech-plum.vercel.app/api/produtos');
+        const response = await fetch('https://loja-tech-2026.vercel.app/api/produtos');
         if (response.ok) {
           const data = await response.json();
           setProdutos(data);
