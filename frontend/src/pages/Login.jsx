@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { supabase } from '../script/supabase'; // Importe o arquivo que criamos acima
+import Logo from "../img/logo/lojatech.png"
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -55,7 +56,7 @@ export default function Login() {
 <div class="flex flex-col items-center mb-8">
 <div class="w-14 h-14 rounded-xl flex items-center justify-center text-white mb-4">
  <Link to="/">
-<img src="src/img/logo/lojatech.png" title='Logo' />
+<img src={Logo} title='Logo' />
 </Link>
 </div>
 <h1 class="text-2xl font-bold text-text-main-light dark:text-text-main-dark">Bem-vindo</h1>

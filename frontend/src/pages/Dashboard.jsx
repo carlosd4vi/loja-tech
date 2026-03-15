@@ -3,6 +3,7 @@ import { supabase } from '../script/supabase';
 import DashboardProdutos from '../script/DashboardProdutos';
 import EditarProduto from './form';
 import { Link, useNavigate } from 'react-router-dom';
+import Logo from "../img/logo/lojatech.png"
 
 
 export default function AdminPanel() {
@@ -65,7 +66,7 @@ const handleLogout = async () => {
           <Link to='/'>
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-lg bg-600 flex items-center justify-center text-white">
-              <img src="src\img\logo\lojatech.png" title='Logo' />
+              <img src={Logo} title='Logo' />
 
             </div>
             <div className="flex flex-col">

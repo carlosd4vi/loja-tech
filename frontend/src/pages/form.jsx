@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useLocation, useParams, useNavigate, Link } from 'react-router-dom';
 import UploadImagemProduto from './componentes/uploadImage';
 import { supabase } from '../script/supabase';
+import Logo from "../img/logo/lojatech.png"
 
 export default function EditarProduto() {
 
@@ -131,7 +132,7 @@ const handleLogout = async () => {
                 <Link to='/'>
                 <div className="flex items-center gap-3 mb-6">
                   <div className="w-10 h-10 rounded-lg bg-600 flex items-center justify-center text-white">
-                    <img src="\src\img\logo\lojatech.png" title='Logo' />
+                    <img src={Logo} title='Logo' />
       
                   </div>
                   <div className="flex flex-col">

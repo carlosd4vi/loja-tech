@@ -1,3 +1,6 @@
+import Logo from "../../img/logo/lojatech.png"
+
+
 const Footer = () => {
     return ( 
     <footer className="bg-white dark:bg-[#1a2634] border-t border-[#f0f2f4] dark:border-[#2a3b4d] mt-auto">
@@ -6,7 +9,7 @@ const Footer = () => {
 <div className="flex flex-col gap-4">
 <div className="flex items-center gap-2">
 <div className="size-6 text-primary flex items-center justify-center">
-<img src="src/img/logo/lojatech.png" />
+<img src={Logo} />
 </div>
 <h2 className="text-base font-bold text-[#111418] dark:text-white">Loja Tech</h2>
 </div>

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useParams } from "react-router-dom";
 import CheckoutModal from './componentes/pagamento';
 import FavoriteButton from './componentes/favorite';
+import Logo from "../img/logo/lojatech.png"
 
 const ViewProduto = () => {
     const { id } = useParams();
@@ -76,7 +77,7 @@ const ViewProduto = () => {
                 <div className="flex items-center gap-8">
                     <div className="flex items-center gap-2 text-[#111418] dark:text-white">
                         <div className="size-8 text-primary flex items-center justify-center">
-                        <img src="/src/img/logo/lojatech.png" />
+                        <img src={Logo} />
                         </div>
                         <h2 className="text-[#111418] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">Loja Tech</h2>
                     </div>
@@ -236,7 +237,7 @@ const ViewProduto = () => {
             <footer className="bg-white dark:bg-[#1a202c] border-t border-[#f0f2f4] dark:border-[#2a3441] py-10 px-6 md:px-20 lg:px-40">
                 <div className="max-w-[1200px] mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
                     <div className="flex items-center gap-2 text-[#111418] dark:text-white">
-                        <img src="/src/img/logo/lojatech.png" width="35px" />
+                        <img src={Logo} width="35px" />
                         <h2 className="text-[#111418] dark:text-white text-lg font-bold">Loja Tech</h2>
                     </div>
                     <p className="text-[#617289] text-sm">© 2026 Loja Tech LTDA. Todos os direitos reservados.</p>

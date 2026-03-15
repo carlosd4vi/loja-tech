@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import Banner from '../../img/produtos/banner.webp';
+import Banner from '../../img/logo/banner.webp';
 
 const Header = () => {
   // ==========================================
