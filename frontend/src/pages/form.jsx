@@ -3,6 +3,7 @@ import { useLocation, useParams, useNavigate, Link } from 'react-router-dom';
 import UploadImagemProduto from './componentes/uploadImage';
 import { supabase } from '../script/supabase';
 import Logo from "../img/logo/lojatech.png"
+import adm from "../img/logo/adm.jpg"
 
 export default function EditarProduto() {
 
@@ -158,7 +159,7 @@ const handleLogout = async () => {
     
     {/* Info do Usuário (Esquerda) */}
     <div className="flex items-center gap-3">
-      <img title="IEL CE" className="h-10 w-10 rounded-full bg-gray-200 object-cover" src="/src/img/logo/adm.jpg"/>
+      <img title="IEL CE" className="h-10 w-10 rounded-full bg-gray-200 object-cover" src={adm}/>
       <div className="flex flex-col">
         <p className="text-sm font-medium text-gray-900 dark:text-white">Administrativo</p>
       </div>
