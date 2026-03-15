@@ -6,8 +6,6 @@ import Logo from "../img/logo/lojatech.png"
 
 const ViewProduto = () => {
     const { id } = useParams();
-    
-    // Estados para guardar as informações da API e o status de carregamento
     const [produto, setProduto] = useState(null);
     const [loading, setLoading] = useState(true);
 
@@ -17,15 +15,13 @@ const ViewProduto = () => {
                 // 1. Inicia o carregamento
                 setLoading(true);
                 
-                // 2. Faz a chamada real para a sua API usando o ID da URL
+                // 2. Chama API
                 const response = await fetch(`https://loja-tech-44ns.onrender.com/api/produtos/${id}`);
                 
-                // 3. Verifica se a API respondeu com sucesso
+                // 3. Verifica se a API respondeu
                 if (!response.ok) {
                     throw new Error('Produto não encontrado na API');
                 }
-
-                // 4. Converte a resposta para JSON e salva na variável "produto"
                 const data = await response.json();
                 setProduto(data);
 
@@ -33,18 +29,16 @@ const ViewProduto = () => {
                 console.error("Erro ao buscar produto da API:", error);
                 setProduto(null);
             } finally {
-                // 5. Finaliza o status de carregamento, dando erro ou sucesso
                 setLoading(false);
             }
         };
 
-        // Só faz a busca se o ID existir na URL
         if (id) {
             buscarProduto();
         }
     }, [id]);
 
-    // Telinha de carregamento enquanto a API busca os dados
+    // Tela de Carregamento
     if (loading) {
         return (
             <div className="min-h-screen flex items-center justify-center dark:text-white dark:bg-[#1a202c]">
@@ -55,8 +49,7 @@ const ViewProduto = () => {
             </div>
         );
     }
-
-    // Telinha de erro caso a API não encontre o ID
+    // Caso não encontre o Produto
     if (!produto) {
         return (
             <div className="min-h-screen flex items-center justify-center dark:text-white dark:bg-[#1a202c]">
@@ -69,7 +62,6 @@ const ViewProduto = () => {
         );
     }
 
-    // Tela principal com os dados do produto!
     return (
         <div className="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden">
             <Link to="/">
@@ -193,7 +185,6 @@ const ViewProduto = () => {
                             </div>
                         </div>
 
-                        {/* Avaliações Dinâmicas usando MAP */}
                         <div className="border-t border-[#f0f2f4] dark:border-[#2a3441] py-12" id="reviews">
                             <h3 className="text-2xl font-bold text-[#111418] dark:text-white mb-8">Avaliações</h3>
                             <div className="flex flex-col lg:flex-row gap-12">

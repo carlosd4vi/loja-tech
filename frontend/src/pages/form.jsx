@@ -9,15 +9,14 @@ export default function EditarProduto() {
 
   const location = useLocation();
   const { id } = useParams(); // Pega o ID da URL (ex: /editar/123)
-  // Controle do Modal de Salvamento
   const [isSaveModalOpen, setIsSaveModalOpen] = useState(false);
   // Controle do Toast (Aviso flutuante)
   const [feedback, setFeedback] = useState(null);
   
-  // Aqui nós resgatamos os dados que vieram do Link!
+  // Aqui pega os dados que vieram do Link
   const produtoQueVeioDaRota = location.state?.produtoAtual;
 
-  // Criamos o estado do formulário já preenchido com os dados (se existirem)
+  // Estado de dados já feitos
   const [formData, setFormData] = useState({
     nomeProduto: produtoQueVeioDaRota?.nomeProduto || '',
     DescricaoCurta: produtoQueVeioDaRota?.DescricaoCurta || '',
@@ -32,36 +31,29 @@ export default function EditarProduto() {
     Imagem: produtoQueVeioDaRota?.Imagem || ''
   });
 
-  // Opcional: lidar com carregamento direto da página
   useEffect(() => {
-    // Se a pessoa atualizar a página de edição (F5), o "location.state" se perde.
-    // É uma boa prática fazer um fetch(http://localhost:3000/api/produtos/${id}) 
-    // aqui dentro caso "produtoQueVeioDaRota" seja undefined.
     if (!produtoQueVeioDaRota) {
       console.log("Fazer fetch do produto com ID:", id);
-      // colocar a lógica de buscar 1 produto só pelo ID aqui...
     }
   }, [id, produtoQueVeioDaRota]);
 
-  // FUNÇÃO 1: Apenas intercepta o envio do formulário e abre o modal
   const handleSubmit = (e) => {
     e.preventDefault();
     
-    // Validação extra por segurança:
+    // Verifica Campos
     if (!formData.nomeProduto || !formData.Preco) {
       setFeedback({ tipo: 'erro', texto: 'Preencha os campos obrigatórios.' });
       setTimeout(() => setFeedback(null), 3000);
       return;
     }
 
-    setIsSaveModalOpen(true); // Abre a caixinha perguntando se tem certeza
+    setIsSaveModalOpen(true); // Abre o modal se tem certeza
   };
 
-  // FUNÇÃO 2: Executa o salvamento no Supabase (será chamada pelo botão do modal)
   const executarSalvar = async () => {
     setIsSaveModalOpen(false); // Fecha o modal primeiro
     
-    // Mostra notificação de "carregando"
+    // Mostra o carregamento
     setFeedback({ tipo: 'loading', texto: 'Salvando produto...' });
 
     const dadosDoProduto = {
@@ -88,19 +80,15 @@ export default function EditarProduto() {
 
       if (resposta.error) throw resposta.error;
 
-      // Troca a notificação para SUCESSO
       setFeedback({ tipo: 'sucesso', texto: id !== 'new' ? 'Produto atualizado!' : 'Novo produto criado!' });
-      
-      // Espera 1.5 segundos para o usuário conseguir ler a mensagem antes de mudar de tela
       setTimeout(() => {
         navigate('/dashboard'); 
       }, 1500);
 
     } catch (error) {
       console.error("Erro ao salvar produto:", error.message);
-      // Troca a notificação para ERRO
       setFeedback({ tipo: 'erro', texto: 'Falha ao salvar. Verifique as informações.' });
-      setTimeout(() => setFeedback(null), 3000); // Some após 3s
+      setTimeout(() => setFeedback(null), 3000); // Some 3 segundos
     }
   };
 
@@ -108,12 +96,12 @@ const navigate = useNavigate();
 
 const handleLogout = async () => {
   try {
-    // Pede para o Supabase encerrar a sessão atual
+    // Encerrar a sessão atual
     const { error } = await supabase.auth.signOut();
     
     if (error) throw error;
 
-    // Se deu tudo certo, manda o usuário de volta para a tela de login
+    // Volta para o login
     navigate('/login'); 
     
   } catch (error) {
@@ -123,11 +111,7 @@ const handleLogout = async () => {
 };
 
   return (
-    // 1. Simplificamos a raiz. Usamos apenas flex e h-screen aqui.
     <main className="flex h-screen w-full font-sans text-slate-800 bg-gray-50 dark:bg-[#111827]">
-      
-      {/* --- SIDEBAR (Fixa e Compartilhada) --- */}
-      {/* A sidebar continua igual, ela não precisa de scroll */}
       <aside className="w-64 flex-shrink-0 flex flex-col bg-white dark:bg-[#1f2937] border-r border-gray-200 dark:border-gray-700 h-full transition-colors duration-200">
               <div className="p-6 flex flex-col gap-1">
                 <Link to='/'>
@@ -143,7 +127,6 @@ const handleLogout = async () => {
                 </Link>
           
           <nav className="flex flex-col gap-1">
-            {/* Aba Products (Ativa a Lista) */}
             <Link to="/dashboard"><button
               className={`flex items-center gap-3 px-3 py-3 rounded-lg transition-colors group w-full text-left bg-blue-600/10 text-blue-600`}
             >
@@ -156,16 +139,12 @@ const handleLogout = async () => {
         
         <div className="mt-auto p-6 border-t border-gray-200 dark:border-gray-700">
   <div className="flex items-center justify-between gap-3">
-    
-    {/* Info do Usuário (Esquerda) */}
     <div className="flex items-center gap-3">
       <img title="IEL CE" className="h-10 w-10 rounded-full bg-gray-200 object-cover" src={adm}/>
       <div className="flex flex-col">
         <p className="text-sm font-medium text-gray-900 dark:text-white">Administrativo</p>
       </div>
     </div>
-
-    {/* Botão de Sair (Direita) */}
     <button 
       onClick={handleLogout}
       className="p-2 text-gray-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/30 rounded-lg transition-colors flex items-center justify-center"
@@ -177,9 +156,6 @@ const handleLogout = async () => {
   </div>
 </div>
       </aside>
-
-      {/* 2. ÁREA DE CONTEÚDO (O Segredo está aqui!) */}
-      {/* Adicionamos flex-1, h-full e overflow-y-auto para que APENAS esse lado role */}
       <div className="flex-1 h-full overflow-y-auto">
         
         <div className="w-full max-w-[1000px] mx-auto p-6 md:p-10 flex flex-col gap-6">
@@ -194,10 +170,9 @@ const handleLogout = async () => {
             <p className="text-gray-500 dark:text-gray-400">Preencha os detalhes para registrar um item.</p>
           </div>
 
-          <div className="bg-white dark:bg-[#1f2937] rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden mb-10"> {/* Adicionado mb-10 para dar um respiro no final */}
+          <div className="bg-white dark:bg-[#1f2937] rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden mb-10">
             <form className="flex flex-col divide-y divide-gray-200 dark:divide-gray-700" onSubmit={handleSubmit}>
               
-              {/* === INFORMAÇÕES GERAIS === */}
               <div className="p-6 md:p-8 flex flex-col gap-6">
                 <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Informações Gerais</h2>
                 
@@ -227,20 +202,15 @@ const handleLogout = async () => {
                   <textarea className="w-full rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-[#111827] text-gray-900 dark:text-white p-4 focus:ring-2 focus:ring-blue-600 focus:outline-none resize-y min-h-[120px] transition-shadow" id="description" placeholder="Descrição completa do produto" rows="5" value={formData.DescricaoLonga || ''} onChange={(e) => setFormData({...formData, DescricaoLonga: e.target.value})} required></textarea>
                 </div>
               </div>
-
-              {/* === IMAGENS === */}
               {formData.Imagem && (
   <div className="p-6 md:p-8 flex flex-col gap-6 w-full">
     <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
       Imagem Atual do Produto:
     </h2>
-    
-    {/* Esta div interna é quem garante que apenas a imagem fique no meio */}
     <div className="flex justify-center w-full">
       <img 
         src={formData.Imagem}
         alt="Preview do produto"
-        /* w-64 h-64 deixa a imagem com 256x256 pixels. Se quiser maior, mude para w-80 h-80 */
         className="w-64 h-64 object-cover rounded-xl shadow-md border border-gray-200 dark:border-gray-700" 
       />
     </div>
@@ -253,7 +223,6 @@ const handleLogout = async () => {
   }} 
 />
 
-              {/* === ESPECIFICAÇÕES === */}
               <div className="p-6 md:p-8 flex flex-col gap-6">
                 <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Especificações (Opcional):</h2>
                 <div className="flex flex-col gap-2">
@@ -282,7 +251,6 @@ const handleLogout = async () => {
                 </div>
               </div>
 
-              {/* === BOTÕES === */}
               <div className="p-6 md:p-8 bg-gray-50/30 dark:bg-[#111827]/30 flex items-center justify-end gap-4">
                 <Link to="/dashboard"><button 
                   className="px-6 py-2.5 rounded-lg border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white bg-white dark:bg-[#1f2937] hover:bg-gray-50 dark:hover:bg-[#374151] font-medium text-sm transition-colors" 
@@ -346,7 +314,7 @@ const handleLogout = async () => {
           className={`fixed bottom-6 right-6 px-6 py-4 rounded-xl shadow-2xl flex items-center gap-3 text-white z-[200] animate-fade-in transition-all transform ${
             feedback.tipo === 'sucesso' ? 'bg-green-600' : 
             feedback.tipo === 'erro' ? 'bg-red-600' : 
-            'bg-blue-600' // Cor para o loading
+            'bg-blue-600'
           }`}
         >
           <span className={`material-symbols-outlined text-[24px] ${feedback.tipo === 'loading' ? 'animate-spin' : ''}`}>

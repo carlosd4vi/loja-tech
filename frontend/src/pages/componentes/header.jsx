@@ -4,17 +4,14 @@ import Banner from '../../img/logo/banner.webp';
 import Logo from "../../img/logo/lojatech.png"
 
 const Header = () => {
-  // ==========================================
-  // 1. ESTADOS DA PESQUISA
-  // ==========================================
+
   const [termoPesquisa, setTermoPesquisa] = useState('');
   const [produtos, setProdutos] = useState([]);
   const [resultados, setResultados] = useState([]);
   const [mostrarDropdown, setMostrarDropdown] = useState(false);
 
-  // ==========================================
-  // 2. BUSCAR PRODUTOS NA API AO CARREGAR
-  // ==========================================
+  // Busca informações de Pesquisa na API.
+
   useEffect(() => {
     const buscarProdutosParaPesquisa = async () => {
       try {
@@ -29,22 +26,17 @@ const Header = () => {
     };
     buscarProdutosParaPesquisa();
   }, []);
-
-  // ==========================================
-  // 3. FILTRAR ENQUANTO DIGITA
-  // ==========================================
+  
   const lidarComPesquisa = (e) => {
     const texto = e.target.value;
     setTermoPesquisa(texto);
 
-    // Se apagou tudo, fecha o dropdown
     if (texto.trim() === '') {
       setResultados([]);
       setMostrarDropdown(false);
       return;
     }
 
-    // Filtra pelo nome do produto
     const produtosFiltrados = produtos.filter((produto) => {
       const nome = produto.nomeProduto || produto.nome || '';
       return nome.toLowerCase().includes(texto.toLowerCase());
@@ -54,7 +46,6 @@ const Header = () => {
     setMostrarDropdown(true);
   };
 
-  // Fecha o menu se o usuário clicar em um produto
   const fecharPesquisa = () => {
     setTermoPesquisa('');
     setMostrarDropdown(false);
@@ -75,11 +66,6 @@ const Header = () => {
           </div>
 
           <div className="flex flex-1 justify-end items-center gap-4 md:gap-8">
-            
-            {/* ==================================================== */}
-            {/* BARRA DE PESQUISA COM DROPDOWN                       */}
-            {/* ==================================================== */}
-            {/* Note o 'relative' nesta label para o dropdown ancorar nela */}
             <label className="hidden md:flex flex-col w-full max-w-[320px] h-10 relative">
               <div className="flex w-full flex-1 items-stretch rounded-lg h-full relative group z-40">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-[#617289] dark:text-[#9ca3af]">
@@ -93,21 +79,18 @@ const Header = () => {
                   onChange={lidarComPesquisa}
                 />
               </div>
-
-              {/* Caixinha do Dropdown Flutuante */}
               {mostrarDropdown && (
                 <div className="absolute top-full left-0 right-0 mt-2 bg-white dark:bg-[#1a202c] border border-gray-200 dark:border-[#2a3441] rounded-xl shadow-xl z-[100] overflow-hidden flex flex-col max-h-[400px]">
                   {resultados.length > 0 ? (
                     <div className="overflow-y-auto flex flex-col py-2">
                       {resultados.map((produto) => (
+                        // Caso Encontre o Produto
                         <Link 
                           key={produto.id} 
-                          // ATENÇÃO: Verifique se essa é a rota certa para ver o produto
                           to={`/produto/categoria/celular/${produto.id}`} 
                           onClick={fecharPesquisa}
                           className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 dark:hover:bg-[#2a3441] transition-colors border-b border-gray-100 dark:border-[#2a3441] last:border-0"
                         >
-                          {/* Miniatura da Imagem */}
                           <div className="w-10 h-10 rounded bg-gray-100 dark:bg-gray-800 flex-shrink-0 overflow-hidden">
                             {produto.Imagem || produto.imagem ? (
                               <img src={produto.Imagem || produto.imagem} alt="miniatura" className="w-full h-full object-cover" />
@@ -116,7 +99,6 @@ const Header = () => {
                             )}
                           </div>
                           
-                          {/* Nome e Preço */}
                           <div className="flex flex-col flex-1 min-w-0">
                             <span className="text-sm font-bold text-gray-900 dark:text-white truncate">
                               {produto.nomeProduto || produto.nome}
@@ -129,7 +111,7 @@ const Header = () => {
                       ))}
                     </div>
                   ) : (
-                    // Mensagem caso não encontre nada
+                    // Caso não encontre nada
                     <div className="p-4 text-center text-sm text-gray-500 dark:text-gray-400">
                       Nenhum produto encontrado.
                     </div>

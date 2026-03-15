@@ -1,5 +1,6 @@
 import Logo from "../../img/logo/lojatech.png"
 
+// Componente do Footer (Página Final)
 
 const Footer = () => {
     return ( 

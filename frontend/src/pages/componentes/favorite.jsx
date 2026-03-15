@@ -4,11 +4,12 @@ export default function FavoriteButton() {
   const [liked, setLiked] = useState(false);
   const [animating, setAnimating] = useState(false);
 
+  // Animação de Curtida
+
   const handleClick = () => {
-    // Se não estava curtido, ativa a animação de "pulo"
     if (!liked) {
       setAnimating(true);
-      setTimeout(() => setAnimating(false), 300); // Remove a classe de animação após 300ms
+      setTimeout(() => setAnimating(false), 300); 
     }
     setLiked(!liked);
   };
@@ -19,8 +20,9 @@ export default function FavoriteButton() {
       className={`
         h-12 w-12 rounded-lg border flex items-center justify-center transition-all duration-300
         ${liked 
-          ? 'border-red-500 text-red-500 bg-red-50 dark:bg-red-500/10' // Estilo quando ATIVO (Curtido)
-          : 'border-[#e5e7eb] dark:border-[#2a3441] bg-white dark:bg-[#1a202c] text-[#111418] dark:text-white hover:text-red-500 hover:border-red-500 hover:bg-red-50 dark:hover:bg-transparent' // Estilo INATIVO
+          ? 'border-red-500 text-red-500 bg-red-50 dark:bg-red-500/10' // Caso fique Ativo
+          : 'border-[#e5e7eb] dark:border-[#2a3441] bg-white dark:bg-[#1a202c] text-[#111418] dark:text-white hover:text-red-500 hover:border-red-500 hover:bg-red-50 dark:hover:bg-transparent' 
+          // Caso fique inativo
         }
       `}
     >

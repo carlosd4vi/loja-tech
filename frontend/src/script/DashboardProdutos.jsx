@@ -3,12 +3,10 @@ import { supabase } from './supabase';
 import { Link } from "react-router-dom";
 
 export default function DashboardProdutos() {
-  // 1. Estados
   const [produtos, setProdutos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [erro, setErro] = useState(null);
 
-  // 2. Fetch de Dados
   useEffect(() => {
     const buscarDados = async () => {
       try {
@@ -31,23 +29,14 @@ export default function DashboardProdutos() {
     buscarDados();
   }, []);
 
-
-  // Lembre-se de ter o supabase importado no topo do arquivo!
-// import { supabase } from './supabaseClient';
-
-// Adicione junto dos seus outros useState
 const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 const [produtoParaExcluir, setProdutoParaExcluir] = useState(null);
-// Guarda o tipo da mensagem (sucesso ou erro) e o texto dela
 
-// Função 2: Executa a exclusão de verdade (Vai no botão vermelho do modal)
-// Função 1: Apenas abre o modal e avisa qual é o ID
 const confirmarExclusao = (id) => {
   setProdutoParaExcluir(id);
   setIsDeleteModalOpen(true);
 };
 
-// Função 2: Executa a exclusão de verdade (Vai no botão vermelho do modal)
 const executarExclusao = async () => {
   if (!produtoParaExcluir) return;
 
@@ -59,10 +48,6 @@ const executarExclusao = async () => {
 
     if (error) throw error;
 
-    // Aqui você atualiza a lista da tela (Opção B do seu código original)
-    // setProdutos(prevProdutos => prevProdutos.filter(p => p.id !== produtoParaExcluir));
-
-    // Fecha o modal e limpa o ID
     setIsDeleteModalOpen(false);
     setProdutoParaExcluir(null);
 
@@ -72,19 +57,14 @@ const executarExclusao = async () => {
   }
 };
 
-// Função 3: Fecha o modal se a pessoa desistir
 const cancelarExclusao = () => {
   setIsDeleteModalOpen(false);
   setProdutoParaExcluir(null);
 };
-
-  // 3. Renderização Condicional (Loading/Erro)
   if (loading) return <div className="p-10 text-center text-blue-600 font-bold">Carregando produtos...</div>;
   if (erro) return <div className="p-10 text-center text-red-500">Erro: {erro}</div>;
 
-  // 4. Renderização Principal
   return (
-    // Adicionei apenas este Grid Wrapper para os cards ficarem lado a lado e não um embaixo do outro gigante
     <div className="bg-white dark:bg-[#1f2937] rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
               <div className="overflow-x-auto">
                 <table className="w-full text-left text-sm">
@@ -98,7 +78,6 @@ const cancelarExclusao = () => {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
-      {/* O MAP COMEÇA AQUI - ENVOLVENDO TUDO */}
       {[...produtos].reverse().map((produto) => (
                     <tr className="hover:bg-gray-50 dark:hover:bg-[#374151]/50 transition-colors">
                       <td className="px-6 py-4">
@@ -115,7 +94,6 @@ const cancelarExclusao = () => {
                       <td className="px-6 py-4 text-gray-900 dark:text-white max-w-[200px] truncate">{produto.DescricaoCurta}</td>
                       <td className="px-6 py-4 text-gray-900 dark:text-white">{produto.Preco}</td>
                       <td className="px-6 py-4 text-right">
-  {/* Substituímos o button pelo Link e passamos o produto no 'state' */}
   <Link 
     to={`form/${produto.id}`} 
     state={{ produtoAtual: produto }} 
@@ -131,22 +109,16 @@ const cancelarExclusao = () => {
                       </td>
                     </tr>
       ))}
-      {/* O MAP TERMINA AQUI */}
       </tbody>
       </table>
-      {/* MODAL DE CONFIRMAÇÃO DE EXCLUSÃO */}
 {isDeleteModalOpen && (
   <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-    {/* Fundo escuro com desfoque */}
     <div 
       className="absolute inset-0 bg-black/60 backdrop-blur-sm cursor-pointer"
       onClick={cancelarExclusao}
     ></div>
 
-    {/* Caixinha do Modal */}
     <div className="relative bg-white dark:bg-[#1a202c] w-full max-w-md rounded-xl shadow-2xl overflow-hidden border border-[#e5e7eb] dark:border-[#2a3441] flex flex-col animate-fade-in">
-      
-      {/* Conteúdo */}
       <div className="p-6">
         <div className="w-12 h-12 rounded-full bg-red-100 dark:bg-red-900/30 flex items-center justify-center mb-4 text-red-600 dark:text-red-400">
           <span className="material-symbols-outlined text-[24px]">warning</span>
@@ -156,8 +128,6 @@ const cancelarExclusao = () => {
           Tem certeza que deseja excluir este produto? Essa ação não pode ser desfeita e o produto será removido permanentemente da sua loja.
         </p>
       </div>
-
-      {/* Rodapé com os botões */}
       <div className="p-4 bg-gray-50 dark:bg-[#212936] flex justify-end gap-3 border-t border-[#e5e7eb] dark:border-[#2a3441]">
         <button 
           onClick={cancelarExclusao}

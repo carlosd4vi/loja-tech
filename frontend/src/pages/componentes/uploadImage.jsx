@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { supabase } from '../../script/supabase'; 
 
-// 1. AQUI: Adicionamos o { onUploadSuccess } para receber a função do componente pai
 export default function UploadImagemProduto({ onUploadSuccess }) {
   const [uploading, setUploading] = useState(false);
   const [imageUrl, setImageUrl] = useState(null);
@@ -29,10 +28,10 @@ export default function UploadImagemProduto({ onUploadSuccess }) {
         .from('CDN-Produtos')
         .getPublicUrl(filePath);
 
-      // Salva no estado local para mostrar o preview na telinha de upload
+      // Preview Imagem  
       setImageUrl(publicUrlData.publicUrl);
       
-      // 2. AQUI ESTÁ A MÁGICA: Avisa o formulário principal que a imagem subiu e entrega a URL pra ele!
+      // Entrega a URL
       if (onUploadSuccess) {
         onUploadSuccess(publicUrlData.publicUrl);
       }

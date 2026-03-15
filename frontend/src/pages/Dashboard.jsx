@@ -8,12 +8,8 @@ import adm from "../img/logo/adm.jpg"
 
 
 export default function AdminPanel() {
-  // Estado para controlar qual tela está visível: 'list' (tabela) ou 'form' (adicionar)
   const [currentView, setCurrentView] = useState('list');
   const [activeTab, setActiveTab] = useState('products');
-
-  // Verificar se existe o Token de acesso do Supabase no localStorage
-  // Evitando fazer requisições desnecessárias para o backend se o usuário não estiver logando
 
   if (localStorage.getItem('sb-tmbvjvaqjvrfklmbnqud-auth-token') === null) {
     window.location.href = '/login';
@@ -55,13 +51,10 @@ const handleLogout = async () => {
   // Função para navegar para o formulário de adição
   const goToAdd = () => {
     setCurrentView('list');
-    // Mantém a aba produtos ativa, pois é uma sub-ação
   };
 
   return (
     <div className="flex h-screen w-full font-sans text-slate-800 bg-gray-50 dark:bg-[#111827]">
-      
-      {/* --- SIDEBAR (Fixa e Compartilhada) --- */}
       <aside className="w-64 flex-shrink-0 flex flex-col bg-white dark:bg-[#1f2937] border-r border-gray-200 dark:border-gray-700 h-full transition-colors duration-200">
         <div className="p-6 flex flex-col gap-1">
           <Link to='/'>
@@ -77,7 +70,6 @@ const handleLogout = async () => {
           </Link>
           <nav className="flex flex-col gap-1">
 
-            {/* Aba Products (Ativa a Lista) */}
             <button 
               onClick={goToList}
               className={`flex items-center gap-3 px-3 py-3 rounded-lg transition-colors group w-full text-left
@@ -93,8 +85,6 @@ const handleLogout = async () => {
         
         <div className="mt-auto p-6 border-t border-gray-200 dark:border-gray-700">
   <div className="flex items-center justify-between gap-3">
-    
-    {/* Info do Usuário (Esquerda) */}
     <div className="flex items-center gap-3">
       <img alt="User Avatar" className="h-10 w-10 rounded-full bg-gray-200 object-cover" src={adm}/>
       <div className="flex flex-col">
@@ -102,7 +92,6 @@ const handleLogout = async () => {
       </div>
     </div>
 
-    {/* Botão de Sair (Direita) */}
     <button 
       onClick={handleLogout}
       className="p-2 text-gray-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/30 rounded-lg transition-colors flex items-center justify-center"
@@ -115,10 +104,7 @@ const handleLogout = async () => {
 </div>
       </aside>
 
-      {/* --- CONTEÚDO PRINCIPAL (Muda dinamicamente) --- */}
       <main className="flex-1 flex flex-col h-full overflow-y-auto bg-gray-50 dark:bg-[#111827]">
-        
-        {/* VIEW 1: LISTA DE PRODUTOS (Overview) */}
         {currentView === 'list' && (
           <div className="w-full max-w-[1200px] mx-auto p-6 md:p-10 flex flex-col gap-6">
             <nav className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
@@ -133,8 +119,6 @@ const handleLogout = async () => {
                 <h1 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white">Lista de Produtos</h1>
                 <p className="text-gray-500 dark:text-gray-400">Gerencie seus produtos:</p>
               </div>
-              
-              {/* BOTÃO QUE LEVA PARA O FORMULÁRIO */}
                <Link to="form/new"><button 
                 onClick={goToAdd}
                 className="px-5 py-2.5 rounded-lg bg-blue-600 text-white hover:bg-blue-700 font-medium text-sm shadow-sm shadow-blue-600/30 transition-all transform active:scale-95 flex items-center justify-center gap-2"
@@ -147,8 +131,6 @@ const handleLogout = async () => {
             <DashboardProdutos />
           </div>
         )}
-
-        {/* VIEW 2: FORMULÁRIO DE ADIÇÃO (Add Product) */}
         {currentView === 'form' && (
         <EditarProduto />
         )}
