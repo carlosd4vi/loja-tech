@@ -14,7 +14,7 @@ export default function CheckoutModal({ productId }) {
       try {
         setLoading(true);
         // Faz a busca na sua API
-        const response = await fetch(`https://loja-tech-2026.vercel.app/api/produtos/${productId}`);
+        const response = await fetch(`https://loja-tech-44ns.onrender.com/api/produtos/${productId}`);
         
         if (!response.ok) {
           throw new Error('Produto não encontrado');
