@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Banner from '../../img/logo/banner.webp';
+import Logo from "../../img/logo/lojatech.png"
 
 const Header = () => {
   // ==========================================
@@ -67,7 +68,7 @@ const Header = () => {
           <div className="flex items-center gap-8">
             <div className="flex items-center gap-2 cursor-pointer">
               <div className="size-8 text-primary flex items-center justify-center">
-                <img src="src/img/logo/lojatech.png" alt="Logo" />
+                <img src={Logo} alt="Logo" />
               </div>
               <h2 className="text-lg font-bold leading-tight tracking-[-0.015em] hidden sm:block dark:text-white">Loja Tech</h2>
             </div>

@@ -4,6 +4,7 @@ import DashboardProdutos from '../script/DashboardProdutos';
 import EditarProduto from './form';
 import { Link, useNavigate } from 'react-router-dom';
 import Logo from "../img/logo/lojatech.png"
+import adm from "../img/logo/adm.jpg"
 
 
 export default function AdminPanel() {
@@ -95,7 +96,7 @@ const handleLogout = async () => {
     
     {/* Info do Usuário (Esquerda) */}
     <div className="flex items-center gap-3">
-      <img alt="User Avatar" className="h-10 w-10 rounded-full bg-gray-200 object-cover" src="/src/img/logo/adm.jpg"/>
+      <img alt="User Avatar" className="h-10 w-10 rounded-full bg-gray-200 object-cover" src={adm}/>
       <div className="flex flex-col">
         <p className="text-sm font-medium text-gray-900 dark:text-white">Administrativo</p>
       </div>
