@@ -26,6 +26,7 @@ export default function FavoriteButton() {
         }
       `}
     >
+      {/* icone do Coração */}
       <span 
         className={`
           material-symbols-outlined text-[24px] select-none transition-transform duration-300

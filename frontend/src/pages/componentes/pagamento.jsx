@@ -5,6 +5,8 @@ export default function CheckoutModal({ productId }) {
   const [produtoSelecionado, setProdutoSelecionado] = useState(null);
   const [loading, setLoading] = useState(false);
 
+  //Componente Modal do Pix
+
   useEffect(() => {
     if (!productId) return;
 

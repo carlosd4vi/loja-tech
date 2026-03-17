@@ -64,7 +64,6 @@ const Header = () => {
               <h2 className="text-lg font-bold leading-tight tracking-[-0.015em] hidden sm:block dark:text-white">Loja Tech</h2>
             </div>
           </div>
-
           <div className="flex flex-1 justify-end items-center gap-4 md:gap-8">
             <label className="hidden md:flex flex-col w-full max-w-[320px] h-10 relative">
               <div className="flex w-full flex-1 items-stretch rounded-lg h-full relative group z-40">
@@ -79,6 +78,7 @@ const Header = () => {
                   onChange={lidarComPesquisa}
                 />
               </div>
+              { /* Pesquisa de Produtos */}
               {mostrarDropdown && (
                 <div className="absolute top-full left-0 right-0 mt-2 bg-white dark:bg-[#1a202c] border border-gray-200 dark:border-[#2a3441] rounded-xl shadow-xl z-[100] overflow-hidden flex flex-col max-h-[400px]">
                   {resultados.length > 0 ? (
@@ -119,7 +119,7 @@ const Header = () => {
                 </div>
               )}
             </label>
-
+            { /* Link que redireciona para o Dashboard */}
             <div className="flex items-center gap-3">
               <Link to="/dashboard" className="flex items-center justify-center rounded-lg h-10 px-6 bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold transition-colors">
                 <span className="truncate">Entrar</span>
@@ -134,6 +134,8 @@ const Header = () => {
 }
 
 export default Header;
+
+// Card Inicial do Produto de "Lançamento"
 
 const Section = () => {
     return (
@@ -152,6 +154,7 @@ const Section = () => {
                             Mais um Lançamento incrível da Baseus, o Fone De Ouvido Sem Fio Baseus Bowie E20 Bluetooth 5.3 Preto
                         </p>
 </div>
+{ /* Link que irá redirecionar para o Produto */}
 <div className="flex flex-wrap gap-4">
 <Link to="produto/categoria/celular/6">  
 <button className="inline-flex h-12 items-center justify-center rounded-lg bg-primary px-8 text-base font-bold text-white shadow-md hover:bg-blue-600 transition-colors">
@@ -169,6 +172,7 @@ const Section = () => {
       className="appearance-none bg-white dark:bg-[#1a2634] border border-[#e5e7eb] dark:border-[#2a3b4d] text-[#111418] dark:text-white rounded-lg h-10 pl-4 pr-10 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-blue-600 cursor-pointer hover:bg-gray-50 dark:hover:bg-[#2a3441] transition-colors shadow-sm"
       defaultValue=""
     >
+      { /* Categorias de Produtos (Filtros) Apenas Visual */}
       <option value="" disabled>Ordenar por</option>
       <option value="celular">Celulares</option>
       <option value="monitor">Monitores</option>
