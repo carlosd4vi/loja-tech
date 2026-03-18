@@ -25,8 +25,6 @@ export default function Login() {
       if (error) {
         throw error;
       }
-      console.log("Login realizado:", data);
-      
       navigate('/dashboard');
 
     } catch (error) {
