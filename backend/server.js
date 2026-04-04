@@ -10,6 +10,10 @@ app.use(express.json());
 
 const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
 
+app.get('/', (req, res) => {
+  res.send(200, 'Tudo certo, o servidor está rodando!')
+});
+
 app.get('/api/login', async (req, res) => {
   const { email, password } = req.query;
 
