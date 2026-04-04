@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { supabase } from '../script/supabase';
 import Logo from "../img/logo/lojatech.png"
@@ -10,6 +10,21 @@ export default function Login() {
   const [erro, setErro] = useState(null);
 
   const navigate = useNavigate();
+
+  // 2. NOVO: Verificar se já existe um usuário logado ao abrir a página
+  useEffect(() => {
+    const verificarSessao = async () => {
+      // Pede ao Supabase a sessão atual salva no navegador
+      const { data: { session } } = await supabase.auth.getSession();
+      
+      // Se tiver sessão, o usuário já está logado! Manda pro dashboard.
+      if (session) {
+        navigate('/dashboard');
+      }
+    };
+
+    verificarSessao();
+  }, [navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

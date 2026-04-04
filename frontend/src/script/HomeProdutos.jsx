@@ -16,7 +16,11 @@ export default function HomeProdutos() {
         }
 
         const data = await response.json();
-        setProdutos(data);
+        
+        // MÁGICA AQUI: Ordena os produtos do maior ID (mais novo) para o menor (mais velho)
+        const produtosRecentes = data.sort((a, b) => b.id - a.id);
+        
+        setProdutos(produtosRecentes);
       } catch (error) {
         console.error("Erro no fetch:", error);
         setErro(error.message);
@@ -33,7 +37,8 @@ export default function HomeProdutos() {
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
-      {[...produtos].reverse().map((produto) => (
+      {/* Como já ordenamos no fetch, agora basta fazer o map direto! */}
+      {produtos.map((produto) => (
         <div 
             key={produto.id || produto._id}
             className="group flex flex-col overflow-hidden rounded-xl bg-white dark:bg-[#1a2634] shadow-[0_2px_8px_rgba(0,0,0,0.08)] hover:shadow-[0_8px_16px_rgba(0,0,0,0.12)] border border-transparent hover:border-primary/20 transition-all duration-300"

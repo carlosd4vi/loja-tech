@@ -11,12 +11,6 @@ export default function AdminPanel() {
   const [currentView, setCurrentView] = useState('list');
   const [activeTab, setActiveTab] = useState('products');
 
-  if (localStorage.getItem('sb-tmbvjvaqjvrfklmbnqud-auth-token') === null) {
-    window.location.href = '/login';
-    return null;
-  }
-
-  // 
 supabase.auth.getSession().then(({ data: { session } }) => {
   if (!session) {
     // Não tem sessão, manda de volta pro login

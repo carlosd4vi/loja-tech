@@ -121,7 +121,7 @@ const Header = () => {
             </label>
             { /* Link que redireciona para o Dashboard */}
             <div className="flex items-center gap-3">
-              <Link to="/dashboard" className="flex items-center justify-center rounded-lg h-10 px-6 bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold transition-colors">
+              <Link to="/login" className="flex items-center justify-center rounded-lg h-10 px-6 bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold transition-colors">
                 <span className="truncate">Entrar</span>
               </Link>
             </div>
