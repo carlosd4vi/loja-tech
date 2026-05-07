@@ -1,46 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
+// ✨ Importe os dados estáticos que você criou
+import { produtosEstaticos } from '../dados/produtosStatic'; 
 
 export default function HomeProdutos() {
   const [produtos, setProdutos] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [erro, setErro] = useState(null);
 
   useEffect(() => {
-    const buscarDados = async () => {
-      try {
-        const response = await fetch('https://loja-tech-44ns.onrender.com/api/produtos');
-        
-        if (!response.ok) {
-          throw new Error('Falha ao conectar com o servidor');
-        }
-
-        const data = await response.json();
-        
-        // MÁGICA AQUI: Ordena os produtos do maior ID (mais novo) para o menor (mais velho)
-        const produtosRecentes = data.sort((a, b) => b.id - a.id);
-        
-        setProdutos(produtosRecentes);
-      } catch (error) {
-        console.error("Erro no fetch:", error);
-        setErro(error.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    buscarDados();
+    // ✨ Simula o tempo de uma API real (800 milissegundos)
+    setTimeout(() => {
+      // Ordena os produtos do maior ID (mais novo) para o menor (mais velho)
+      // O spread [...] cria uma cópia para não alterar o array original
+      const produtosRecentes = [...produtosEstaticos].sort((a, b) => b.id - a.id);
+      
+      setProdutos(produtosRecentes);
+      setLoading(false);
+    }, 800);
   }, []);
 
   if (loading) return <div className="p-10 text-center text-blue-600 font-bold">Carregando produtos...</div>;
-  if (erro) return <div className="p-10 text-center text-red-500">Erro: {erro}</div>;
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
-      {/* Como já ordenamos no fetch, agora basta fazer o map direto! */}
       {produtos.map((produto) => (
         <div 
-            key={produto.id || produto._id}
+            key={produto.id}
             className="group flex flex-col overflow-hidden rounded-xl bg-white dark:bg-[#1a2634] shadow-[0_2px_8px_rgba(0,0,0,0.08)] hover:shadow-[0_8px_16px_rgba(0,0,0,0.12)] border border-transparent hover:border-primary/20 transition-all duration-300"
         >
           <Link to={`/produto/categoria/celular/${produto.id}`}>

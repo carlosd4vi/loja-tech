@@ -1,32 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Banner from '../../img/logo/banner.webp';
 import Logo from "../../img/logo/lojatech.png"
 
+// ✨ 1. Importamos o nosso "banco de dados" local
+// (Ajuste o caminho '../data/produtosStatic' conforme a sua estrutura de pastas)
+import { produtosEstaticos } from '../../dados/produtosStatic'; 
+
 const Header = () => {
 
   const [termoPesquisa, setTermoPesquisa] = useState('');
-  const [produtos, setProdutos] = useState([]);
+  // ✨ 2. Removemos o estado 'produtos' e o 'useEffect'. Não precisamos mais deles!
   const [resultados, setResultados] = useState([]);
   const [mostrarDropdown, setMostrarDropdown] = useState(false);
 
-  // Busca informações de Pesquisa na API.
-
-  useEffect(() => {
-    const buscarProdutosParaPesquisa = async () => {
-      try {
-        const response = await fetch('https://loja-tech-44ns.onrender.com/api/produtos');
-        if (response.ok) {
-          const data = await response.json();
-          setProdutos(data);
-        }
-      } catch (error) {
-        console.error("Erro ao carregar pesquisa:", error);
-      }
-    };
-    buscarProdutosParaPesquisa();
-  }, []);
-  
   const lidarComPesquisa = (e) => {
     const texto = e.target.value;
     setTermoPesquisa(texto);
@@ -37,7 +24,8 @@ const Header = () => {
       return;
     }
 
-    const produtosFiltrados = produtos.filter((produto) => {
+    // ✨ 3. Filtramos direto do nosso array estático! Super rápido e sem loading.
+    const produtosFiltrados = produtosEstaticos.filter((produto) => {
       const nome = produto.nomeProduto || produto.nome || '';
       return nome.toLowerCase().includes(texto.toLowerCase());
     });
@@ -135,8 +123,7 @@ const Header = () => {
 
 export default Header;
 
-// Card Inicial do Produto de "Lançamento"
-
+// O Section não fazia nenhuma requisição à API, então ele continua exatamente igual!
 const Section = () => {
     return (
     <main className="flex-grow w-full max-w-[1440px] mx-auto px-4 md:px-10 pb-12">

@@ -2,7 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { Link, useParams } from "react-router-dom";
 import CheckoutModal from './componentes/pagamento';
 import FavoriteButton from './componentes/favorite';
-import Logo from "../img/logo/lojatech.png"
+import Logo from "../img/logo/lojatech.png";
+
+// ✨ 1. Importa os dados estáticos
+import { produtosEstaticos } from '../dados/produtosStatic';
 
 const ViewProduto = () => {
     const { id } = useParams();
@@ -10,27 +13,20 @@ const ViewProduto = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const buscarProduto = async () => {
-            try {
-                // 1. Inicia o carregamento
-                setLoading(true);
+        const buscarProduto = () => {
+            // 1. Inicia o carregamento
+            setLoading(true);
+            
+            // 2. Simula o tempo de rede do Render (600ms)
+            setTimeout(() => {
+                // 3. Procura o produto no array estático pelo ID
+                const produtoEncontrado = produtosEstaticos.find(
+                    (p) => p.id.toString() === id.toString()
+                );
                 
-                // 2. Chama API
-                const response = await fetch(`https://loja-tech-44ns.onrender.com/api/produtos/${id}`);
-                
-                // 3. Verifica se a API respondeu
-                if (!response.ok) {
-                    throw new Error('Produto não encontrado na API');
-                }
-                const data = await response.json();
-                setProduto(data);
-
-            } catch (error) {
-                console.error("Erro ao buscar produto da API:", error);
-                setProduto(null);
-            } finally {
+                setProduto(produtoEncontrado || null);
                 setLoading(false);
-            }
+            }, 600);
         };
 
         if (id) {
@@ -49,6 +45,7 @@ const ViewProduto = () => {
             </div>
         );
     }
+    
     // Caso não encontre o Produto
     if (!produto) {
         return (
@@ -62,6 +59,7 @@ const ViewProduto = () => {
         );
     }
 
+    // O restante do seu layout continua INTACTO, pois o objeto `produto` tem as mesmas chaves que a API retornava
     return (
         <div className="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden">
             <Link to="/">
@@ -69,7 +67,7 @@ const ViewProduto = () => {
                 <div className="flex items-center gap-8">
                     <div className="flex items-center gap-2 text-[#111418] dark:text-white">
                         <div className="size-8 text-primary flex items-center justify-center">
-                        <img src={Logo} />
+                        <img src={Logo} alt="Logo" />
                         </div>
                         <h2 className="text-[#111418] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">Loja Tech</h2>
                     </div>
@@ -121,7 +119,7 @@ const ViewProduto = () => {
                                     </div>
                                     
                                     <p className="text-[#617289] dark:text-gray-300 text-base leading-relaxed">
-                                        {produto.DescricaoCurta || 'Descrição não encontrado'}
+                                        {produto.DescricaoCurta || 'Descrição não encontrada'}
                                     </p>
                                 </div>
                                 
@@ -228,7 +226,7 @@ const ViewProduto = () => {
             <footer className="bg-white dark:bg-[#1a202c] border-t border-[#f0f2f4] dark:border-[#2a3441] py-10 px-6 md:px-20 lg:px-40">
                 <div className="max-w-[1200px] mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
                     <div className="flex items-center gap-2 text-[#111418] dark:text-white">
-                        <img src={Logo} width="35px" />
+                        <img src={Logo} width="35px" alt="Logo" />
                         <h2 className="text-[#111418] dark:text-white text-lg font-bold">Loja Tech</h2>
                     </div>
                     <p className="text-[#617289] text-sm">© 2026 Loja Tech LTDA. Todos os direitos reservados.</p>
